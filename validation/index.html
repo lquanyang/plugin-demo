@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>JQuery-validation demo | Bootstrap</title>
+	<link rel="stylesheet" href="../../js/plugin/bootstrap/css/bootstrap.min.css" />
+	<script type="text/javascript" src="../../js/plugin/jquery.min.js"></script>
+	<script type="text/javascript" src="../../js/plugin/extend/jquery.validate.js"></script>
+</head>
+<body>
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-8 col-sm-offset-2">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h3 class="panel-title">Simple Form</h3>
+					</div>
+					<div class="panel-body">
+						<form id="signupForm" method="post" class="form-horizontal" action="">
+							<div class="form-group">
+								<label class="col-sm-4 control-label" for="firstname">First name</label>
+								<div class="col-sm-5">
+									<input type="text" class="form-control" id="firstname" name="firstname" placeholder="First name" />
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-4 control-label" for="lastname">Last name</label>
+								<div class="col-sm-5">
+									<input type="text" class="form-control" id="lastname" name="lastname" placeholder="Last name" />
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-4 control-label" for="username">Username</label>
+								<div class="col-sm-5">
+									<input type="text" class="form-control" id="username" name="username" placeholder="Username" />
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-4 control-label" for="email">Email</label>
+								<div class="col-sm-5">
+									<input type="text" class="form-control" id="email" name="email" placeholder="Email" />
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-sm-4 control-label" for="password">Password</label>
+								<div class="col-sm-5">
+									<input type="password" class="form-control" id="password" name="password" placeholder="Password" />
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-sm-4 control-label" for="confirm_password">Confirm password</label>
+								<div class="col-sm-5">
+									<input type="password" class="form-control" id="confirm_password" name="confirm_password" placeholder="Confirm password" />
+								</div>
+							</div>
+
+							<div class="form-group">
+								<div class="col-sm-5 col-sm-offset-4">
+									<div class="checkbox">
+										<label>
+											<input type="checkbox" id="agree" name="agree" value="agree" />Please agree to our policy
+										</label>
+									</div>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<div class="col-sm-9 col-sm-offset-4">
+									<button type="submit" class="btn btn-primary" name="signup" value="Sign up">Sign up</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript">
+		$(document).ready( function () {
+			var validator = $("#signupForm").validate({
+				rules: {
+					firstname: "required",
+					lastname: "required",
+					username: {
+						required: true,
+						minlength: 2
+					},
+					password: {
+						required: true,
+						minlength: 5
+					},
+					confirm_password: {
+						required: true,
+						minlength: 5,
+						equalTo: "#password"
+					},
+					email: {
+						required: true,
+						email: true
+					},
+					agree: "required"
+				},
+				messages: {
+					firstname: "your firstname",
+					lastname: "Please enter your lastname",
+					username: {
+						required: "Please enter a username",
+						minlength: "Your username must consist of at least 2 characters"
+					},
+					password: {
+						required: "Please provide a password",
+						minlength: "Your password must be at least 5 characters long"
+					},
+					confirm_password: {
+						required: "Please provide a password",
+						minlength: "Your password must be at least 5 characters long",
+						equalTo: "Please enter the same password as above"
+					},
+					email: "Please enter a valid email address",
+					agree: "Please accept our policy"
+				},
+				errorElement: "span",
+				errorPlacement: function ( error, element ) {
+					// Add the `help-block` class to the error element
+					error.addClass( "help-block" );
+					if ( element.prop( "type" ) === "checkbox" ) {
+						error.insertAfter( element.parent( "label" ) );
+					} else {
+						error.insertAfter( element );
+					}
+				},
+				highlight: function ( element, errorClass, validClass ) {
+					$( element ).parents( ".col-sm-5" ).addClass( "has-error" ).removeClass( "has-success" );
+				},
+				unhighlight: function (element, errorClass, validClass) {
+					$( element ).parents( ".col-sm-5" ).addClass( "has-success" ).removeClass( "has-error" );
+				},
+				submitHandler: function(form) {
+					console.log(form)
+					form.reset();
+				}
+			});
+		});
+	</script>
+</body>
+</html>

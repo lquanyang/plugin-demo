@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="renderer" content="webkit">
+    <title>Echarts</title>
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0" name="viewport">
+    <style>
+    .demo {
+        margin: 0 auto;
+        padding: 50px;
+    }
+    .chart_box {
+    	height:300px;background-color:#fafafa;padding:10px 20px 10px 20px;
+    }
+    </style>
+</head>
+<body>
+    <div class="demo">
+        <div class="chart_box">
+        	<div id="charts01" style="height:100%;"></div>
+        </div>
+    </div>
+</body>
+</html>
+<script src="../../js/plugin/echarts/echarts.min.js"></script>
+<script type="text/javascript">
+	var chart = echarts.init(document.getElementById('charts01'),'macarons');
+	var option = {
+		    tooltip : {
+		        trigger: 'item',
+		        formatter: "{a} <br/>{b} : {c} ({d}%)"
+		    },
+		    legend: {
+		        orient:'horizontal',
+		        bottom:'10px',
+		        right:'center',
+		        itemGap:10,
+		        itemWidth:16,
+		        itemHeight:16,
+		        textStyle:{
+		            color:'#7984a3',
+		            fontFamily:'Arial',
+		            fontSize:16,
+		        },
+		        data: ['Group1','Group2','Group3']
+		    },
+		    color:['#00d0be','#41affa','#777ffb'],
+		    series : [
+		        {
+		            name: 'Impression Group',
+		            type: 'pie',
+		            center: ['50%', '50%'],
+		            selectedOffset:20,
+		            selectedMode:'single',
+		            clockwise:true,
+		            radius: ['0%','55%'] ,
+		            roseType:false,
+		            label:{
+		                normal:{
+		                    position:'inside',
+		                    formatter: '{c}',
+		                    textStyle:{
+		                        fontSize:26
+		                    }
+		                }
+		            },
+		            data:[
+		                {
+		                    value:235,
+		                    name:'Group1'
+		                },{
+		                    value:310, 
+		                    name:'Group2'
+		                },{
+		                    value:234, 
+		                    name:'Group3'
+		                }
+		            ],
+		            itemStyle: {
+		                emphasis: {
+		                    shadowBlur: 10,
+		                    shadowOffsetX: 0,
+		                    shadowColor: 'rgba(0, 0, 0, 0.1)'
+		                }
+		            }
+		        }
+		    ]
+		}
+	chart.setOption(option);
+	window.addEventListener('resize',function(){
+        chart.resize();    
+ 	}); 
+</script>

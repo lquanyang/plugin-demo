@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>large-columns</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../../js/plugin/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../js/plugin/bootstrap-table/bootstrap-table.css">
+</head>
+
+<body>
+    <div style="width:80%;margin:0 auto;">
+        <div id="toolbar">
+            <div class="form-inline" role="form">
+                <!-- <div class="form-group">
+                    <span>Offset: </span>
+                    <input name="offset" class="form-control w70" type="number" value="0">
+                </div>
+                <div class="form-group">
+                    <span>Limit: </span>
+                    <input name="limit" class="form-control w70" type="number" value="5">
+                </div>
+                <div class="form-group">
+                    <input name="search" class="form-control" type="text" placeholder="Search">
+                </div>
+                <button id="ok" type="submit" class="btn btn-default">OK</button> -->
+                <button id="getSelectionsButton" class="btn btn-default">getSelections</button>
+                <button id="getDataButton" class="btn btn-default">getData</button>
+                <button id="loadButton" class="btn btn-default">load</button>
+                <button id="appendButton" class="btn btn-default">append</button>
+                <button id="prependButton" class="btn btn-default">prepend</button>
+                <button id="toggleViewButton" class="btn btn-default">toggleView</button>
+            </div>
+        </div>
+        <table id="table"></table>
+    </div>
+    <script src="../../js/plugin/jquery.min.js"></script>
+    <script src="../../js/plugin/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../../js/plugin/bootstrap-table/bootstrap-table.js"></script>
+    <script src="../../js/plugin/bootstrap-table/bootstrap-table-filter-control.js"></script>
+    <script src="../../js/plugin/extend/jquery.numberformatter.js"></script>
+    <script>
+    //重置 formatNumber
+    jQuery.fn.formatNumber.defaults = {
+        format: "#,###.00",
+        locale: "us",
+        decimalSeparatorAlwaysShown: false,
+        nanForceZero: true,
+        round: true,
+        scale: false, //规模
+        scaleNames: ['', 'K', 'M', 'B', 'T'],
+        useScaleAsDecimalSeparator: false
+    };
+    
+
+    function buildTable($el) {
+        var dataArr = [
+            {
+                "brandid": "1",
+                "title": "Starbucks2",
+                "budgettype": "ALLTIME",
+                "budget": "1000.00",
+                "status": "2",
+                "updatetime": "2016-08-17 14:46:56",
+                "bidall": "0",
+                "bidwin": "0",
+                "impressions": "1000",
+                "clicks": "10",
+                "conversions": "0",
+                "ctr": "0.10",
+                "cvr": "0.22",
+                "cpc": "0.10",
+                "cpm": "0.30",
+                "dailyspend": "0.000000000000",
+                "amountspend": "0.000000000000",
+                "balance": "1000000000.000000000000"
+            }, {
+                "brandid": "2",
+                "title": "Starbucks",
+                "budgettype": "ALLTIME",
+                "budget": "10000.00",
+                "status": "2",
+                "updatetime": "2016-08-17 14:46:56",
+                "bidall": "0",
+                "bidwin": "0",
+                "impressions": "0",
+                "clicks": "0",
+                "conversions": "0",
+                "ctr": "0.00",
+                "cvr": "0.00",
+                "cpc": "0.00",
+                "cpm": "0.00",
+                "dailyspend": "0.000000000000",
+                "amountspend": "0.000000000000",
+                "balance": "1000000000.000000000000"
+            }, {
+                "brandid": "3",
+                "title": "Starbu21cks",
+                "budgettype": "ALLTIME",
+                "budget": "2100.00",
+                "status": "2",
+                "updatetime": "2016-08-17 14:46:56",
+                "bidall": "0",
+                "bidwin": "0",
+                "impressions": "0",
+                "clicks": "0",
+                "conversions": "0",
+                "ctr": "0.00",
+                "cvr": "0.00",
+                "cpc": "0.00",
+                "cpm": "0.00",
+                "dailyspend": "0.000000000000",
+                "amountspend": "0.000000000000",
+                "balance": "1000000000.000000000000"
+            }, {
+                "brandid": "5",
+                "title": "asdvgga",
+                "budgettype": "ALLTIME",
+                "budget": "531.00",
+                "status": "2",
+                "updatetime": "2016-08-17 14:46:56",
+                "bidall": "0",
+                "bidwin": "0",
+                "impressions": "0",
+                "clicks": "0",
+                "conversions": "0",
+                "ctr": "0.00",
+                "cvr": "0.00",
+                "cpc": "0.00",
+                "cpm": "0.00",
+                "dailyspend": "0.000000000000",
+                "amountspend": "0.000000000000",
+                "balance": "1000000000.000000000000"
+            }, {
+                "brandid": "1",
+                "title": "Starbucks2",
+                "budgettype": "ALLTIME",
+                "budget": "1000.00",
+                "status": "2",
+                "updatetime": "2016-08-17 14:46:56",
+                "bidall": "0",
+                "bidwin": "0",
+                "impressions": "1000",
+                "clicks": "10",
+                "conversions": "0",
+                "ctr": "0.10",
+                "cvr": "0.22",
+                "cpc": "0.10",
+                "cpm": "0.30",
+                "dailyspend": "0.000000000000",
+                "amountspend": "0.000000000000",
+                "balance": "1000000000.000000000000"
+            }, {
+                "brandid": "2",
+                "title": "Starbucks",
+                "budgettype": "ALLTIME",
+                "budget": "10000.00",
+                "status": "2",
+                "updatetime": "2016-08-17 14:46:56",
+                "bidall": "0",
+                "bidwin": "0",
+                "impressions": "0",
+                "clicks": "0",
+                "conversions": "0",
+                "ctr": "0.00",
+                "cvr": "0.00",
+                "cpc": "0.00",
+                "cpm": "0.00",
+                "dailyspend": "0.000000000000",
+                "amountspend": "0.000000000000",
+                "balance": "1000000000.000000000000"
+            }, {
+                "brandid": "3",
+                "title": "Starbu21cks",
+                "budgettype": "ALLTIME",
+                "budget": "2100.00",
+                "status": "2",
+                "updatetime": "2016-08-17 14:46:56",
+                "bidall": "0",
+                "bidwin": "0",
+                "impressions": "0",
+                "clicks": "0",
+                "conversions": "0",
+                "ctr": "0.00",
+                "cvr": "0.00",
+                "cpc": "0.00",
+                "cpm": "0.00",
+                "dailyspend": "0.000000000000",
+                "amountspend": "0.000000000000",
+                "balance": "1000000000.000000000000"
+            }, {
+                "brandid": "5",
+                "title": "asdvgga",
+                "budgettype": "ALLTIME",
+                "budget": "531.00",
+                "status": "2",
+                "updatetime": "2016-08-17 14:46:56",
+                "bidall": "0",
+                "bidwin": "0",
+                "impressions": "0",
+                "clicks": "0",
+                "conversions": "0",
+                "ctr": "0.00",
+                "cvr": "0.00",
+                "cpc": "0.00",
+                "cpm": "0.00",
+                "dailyspend": "0.000000000000",
+                "amountspend": "0.000000000000",
+                "balance": "1000000000.000000000000"
+            }, {
+                "brandid": "1",
+                "title": "Starbucks2",
+                "budgettype": "ALLTIME",
+                "budget": "1000.00",
+                "status": "2",
+                "updatetime": "2016-08-17 14:46:56",
+                "bidall": "0",
+                "bidwin": "0",
+                "impressions": "1000",
+                "clicks": "10",
+                "conversions": "0",
+                "ctr": "0.10",
+                "cvr": "0.22",
+                "cpc": "0.10",
+                "cpm": "0.30",
+                "dailyspend": "0.000000000000",
+                "amountspend": "0.000000000000",
+                "balance": "1000000000.000000000000"
+            }, {
+                "brandid": "2",
+                "title": "Starbucks",
+                "budgettype": "ALLTIME",
+                "budget": "10000.00",
+                "status": "2",
+                "updatetime": "2016-08-17 14:46:56",
+                "bidall": "0",
+                "bidwin": "0",
+                "impressions": "0",
+                "clicks": "0",
+                "conversions": "0",
+                "ctr": "0.00",
+                "cvr": "0.00",
+                "cpc": "0.00",
+                "cpm": "0.00",
+                "dailyspend": "0.000000000000",
+                "amountspend": "0.000000000000",
+                "balance": "1000000000.000000000000"
+            }, {
+                "brandid": "3",
+                "title": "Starbu21cks",
+                "budgettype": "ALLTIME",
+                "budget": "2100.00",
+                "status": "2",
+                "updatetime": "2016-08-17 14:46:56",
+                "bidall": "0",
+                "bidwin": "0",
+                "impressions": "0",
+                "clicks": "0",
+                "conversions": "0",
+                "ctr": "0.00",
+                "cvr": "0.00",
+                "cpc": "0.00",
+                "cpm": "0.00",
+                "dailyspend": "0.000000000000",
+                "amountspend": "0.000000000000",
+                "balance": "1000000000.000000000000"
+            }, {
+                "brandid": "5",
+                "title": "asdvgga",
+                "budgettype": "ALLTIME",
+                "budget": "531.00",
+                "status": "2",
+                "updatetime": "2016-08-17 14:46:56",
+                "bidall": "0",
+                "bidwin": "0",
+                "impressions": "0",
+                "clicks": "0",
+                "conversions": "0",
+                "ctr": "0.00",
+                "cvr": "0.00",
+                "cpc": "0.00",
+                "cpm": "0.00",
+                "dailyspend": "0.000000000000",
+                "amountspend": "0.000000000000",
+                "balance": "1000000000.000000000000"
+            }, {
+                "brandid": "1",
+                "title": "Starbucks2",
+                "budgettype": "ALLTIME",
+                "budget": "1000.00",
+                "status": "2",
+                "updatetime": "2016-08-17 14:46:56",
+                "bidall": "0",
+                "bidwin": "0",
+                "impressions": "1000",
+                "clicks": "10",
+                "conversions": "0",
+                "ctr": "0.10",
+                "cvr": "0.22",
+                "cpc": "0.10",
+                "cpm": "0.30",
+                "dailyspend": "0.000000000000",
+                "amountspend": "0.000000000000",
+                "balance": "1000000000.000000000000"
+            }, {
+                "brandid": "2",
+                "title": "Starbucks",
+                "budgettype": "ALLTIME",
+                "budget": "10000.00",
+                "status": "2",
+                "updatetime": "2016-08-17 14:46:56",
+                "bidall": "0",
+                "bidwin": "0",
+                "impressions": "0",
+                "clicks": "0",
+                "conversions": "0",
+                "ctr": "0.00",
+                "cvr": "0.00",
+                "cpc": "0.00",
+                "cpm": "0.00",
+                "dailyspend": "0.000000000000",
+                "amountspend": "0.000000000000",
+                "balance": "1000000000.000000000000"
+            }, {
+                "brandid": "3",
+                "title": "Starbu21cks",
+                "budgettype": "ALLTIME",
+                "budget": "2100.00",
+                "status": "0",
+                "updatetime": "2016-08-17 14:46:56",
+                "bidall": "0",
+                "bidwin": "0",
+                "impressions": "0",
+                "clicks": "0",
+                "conversions": "0",
+                "ctr": "0.00",
+                "cvr": "0.00",
+                "cpc": "0.00",
+                "cpm": "0.00",
+                "dailyspend": "0.000000000000",
+                "amountspend": "0.000000000000",
+                "balance": "1000000000.000000000000"
+            }, {
+                "brandid": "5",
+                "title": "asdvgga",
+                "budgettype": "ALLTIME",
+                "budget": "531.00",
+                "status": "1",
+                "updatetime": "2016-08-17 14:46:56",
+                "bidall": "0",
+                "bidwin": "0",
+                "impressions": "0",
+                "clicks": "0",
+                "conversions": "0",
+                "ctr": "0.00",
+                "cvr": "0.00",
+                "cpc": "0.00",
+                "cpm": "0.00",
+                "dailyspend": "0.000000000000",
+                "amountspend": "0.000000000000",
+                "balance": "1000000000.000000000000"
+            }
+        ]
+        var columnsArr = [
+            {
+                "field": "state",
+                'sortable': false,
+                'visible':true,
+                'switchable':false,
+                'checkbox':true,
+                formatter: function(data, full, index) {
+                    if (index === 2) {
+                        return {
+                            disabled: true
+                        };
+                    }
+                    if (index === 5) {
+                        return {
+                            disabled: true,
+                            checked: false
+                        }
+                    }
+                    return data;
+                }
+            },{
+                "field": "title",
+                "title": "Name",
+                'halign': 'right', //th 对齐
+                'align': 'right', //td 对齐
+                'sortable': true, //是否开始排序
+                'switchable':false,//是否开启列选择
+                formatter: function(data, full, index) {
+                    return data || '-';
+                }
+            }, {
+                "field": "impressions",
+                "title": "Impressions",
+                'sortable': true,
+                "formatter": function(data, full, index) {
+                    return $.formatNumber(data, {
+                        format: '#,##0'
+                    });
+                }
+            }, {
+                "field": "clicks",
+                "title": "Clicks",
+                'sortable': true,
+                "formatter": function(data, full, index) {
+                    return $.formatNumber(data, {
+                        format: '#,##0'
+                    });
+                }
+            }, {
+                "field": "conversions",
+                "title": "Conversions",
+                'sortable': true,
+                "formatter": function(data, full, index) {
+                    return $.formatNumber(data, {
+                        format: '#,##0'
+                    });
+                }
+            }, {
+                "field": "bidwin",
+                "title": "BidWin",
+                'visible':false,//是否显示列
+                'sortable': true,
+                "formatter": function(data, full, index) {
+                    return $.formatNumber(data, {
+                        format: '#,##0'
+                    });
+                }
+            },{
+                "field": "ctr",
+                "title": "CTR",
+                'sortable': true,
+                "formatter": function(data, full, index) {
+                    return $.formatNumber(data, {
+                        format: '#,##0.00%'
+                    });
+                }
+            }, {
+                "field": "cvr",
+                "title": "Cvr",
+                'sortable': true,
+                "formatter": function(data, full, index) {
+                    return $.formatNumber(data, {
+                        format: '#,##0.00%'
+                    });
+                }
+            }
+        ]
+        for(var a=0;a<20;a++){
+            columnsArr.push({
+                "field": "fi_"+a,
+                "title": "fi_"+a,
+                'sortable': true,
+                "formatter": function(data, full, index) {
+                    data = Math.random()*10000;
+                    return $.formatNumber(data, {
+                        format: '#,##0.00'
+                    });
+                }
+            })
+        }
+        var option = {
+            columns: columnsArr,
+            data: dataArr,
+            height: 400,//高度
+            showColumns: true,//是否显示列选择
+            minimumCountColumns:3,//最小列数
+            sortable: true,// 是否开启搜索
+            clickToSelect:true, //点击行选中
+            showRefresh:true,//是否显示刷新控件
+            toolbar:'#toolbar',//工具容器
+            detailView:true,//是否显示展开详细
+            //详细展开方法
+            detailFormatter:function(index, row){
+                var html = [];
+                $.each(row, function (key, value) {
+                    html.push('<p><b>' + key + ':</b> ' + value + '</p>');
+                });
+                return html.join('');
+            },
+            search:true,//是否开启静态搜索
+            searchText:'star',//默认搜索文本
+            showExport:true,
+            //sidePagination:'server',//服务器端翻页
+            pagination:false,//是否开始翻页
+            pageSize:5,//每页数据条数
+            pageNumber:3,//默认页数
+            pageList:[10,50],//单页显示条数切换列表
+            paginationFirstText:'First',
+            paginationPreText:'Previous',
+            paginationNextText:'Next',
+            paginationLastText:'Last'
+        }
+        $el.bootstrapTable('destroy').bootstrapTable(option);
+    }
+    $(function() {
+        var table = $('#table');
+        var okbtn = $('#ok');
+        var getDataButton = $('#getDataButton');
+        var getSelectionsButton = $('#getSelectionsButton');
+        var loadButton = $('#loadButton');
+        var appendButton = $('#appendButton');
+        var prependButton = $('#prependButton');
+        var toggleViewButton = $('#toggleViewButton');
+        //绘制表格
+        buildTable(table);
+        okbtn.click(function () {
+            table.bootstrapTable('refresh');
+        });
+        getSelectionsButton.click(function () {
+            console.log(table.bootstrapTable('getSelections'));
+            console.log(table.bootstrapTable('getAllSelections'));
+        });
+        getDataButton.click(function () {
+            console.log(table.bootstrapTable('getData'));
+        });
+        var randomData = function(){
+            var startId = ~~(Math.random() * 100);
+            var rows = [];
+            for (var i = 0; i < 20; i++) {
+                rows.push({
+                    id: startId + i,
+                    title: 'test' + (startId + i)
+                });
+            }
+            return rows;
+        }
+        loadButton.click(function () {
+            table.bootstrapTable('load',randomData());
+        });
+        appendButton.click(function () {
+            table.bootstrapTable('append', randomData());
+            table.bootstrapTable('scrollTo', 'bottom');
+        });
+        prependButton.click(function () {
+            table.bootstrapTable('prepend', randomData());
+            table.bootstrapTable('scrollTo', 0);
+        });
+        toggleViewButton.click(function () {
+            table.bootstrapTable('toggleView');
+        });
+        
+
+        // table.bootstrapTable('refresh');
+        // table.bootstrapTable('resetView');
+        // table.bootstrapTable('destroy');
+        // table.bootstrapTable('showLoading');
+        // table.bootstrapTable('hideLoading');
+        // table.bootstrapTable('hideColumn', 'name');
+        // table.bootstrapTable('showColumn', 'name');
+        // table.bootstrapTable('selectPage', 2);
+        // table.bootstrapTable('prevPage');
+        // table.bootstrapTable('nextPage');
+        // table.bootstrapTable('togglePagination');
+
+        /* refreshOptions 
+        $button.click(function () {
+            $table.bootstrapTable('refreshOptions', {
+                showColumns: true,
+                search: true,
+                showRefresh: true,
+                url: '../json/data1.json'
+            });
+        });
+        */
+        // table.bootstrapTable('resetSearch');
+
+    });
+    </script>
+</body>
+
+</html>

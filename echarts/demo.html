@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="renderer" content="webkit">
+    <title>Echarts</title>
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0" name="viewport">
+    <style>
+    .demo {
+        margin: 0 auto;
+        padding: 50px;
+    }
+    .chart_box {
+    	height:300px;background-color:#fafafa;padding:10px 20px 10px 20px;
+    }
+    </style>
+</head>
+<body>
+    <div class="demo">
+        <div class="chart_box">
+        	<div id="charts01" style="height:100%;"></div>
+        </div>
+    </div>
+</body>
+</html>
+<script src="../../js/plugin/echarts/echarts.min.js"></script>
+<script type="text/javascript">
+	var chart = echarts.init(document.getElementById('charts01'),'macarons');
+	var option = {
+        baseOption:{
+		    title: {
+		        text: '7 Days of data',
+		        textStyle:{
+		            color:'#7984a3',
+		            fontSize:16
+		        },
+		        top:10,
+		        left:'auto'
+		    },
+		    tooltip: {
+		        trigger: 'axis',
+		        axisPointer:{
+		            type:'line',
+		            lineStyle:{
+		                color:'rgba(0,208,190,0.9)',
+		                type:'dotted'
+		            }
+		        }
+		    },
+		    color:['#41affa', '#00d0be', '#f8564e'],
+		    legend: {
+		        orient:'horizontal',
+		        bottom:'10px',
+		        itemGap:20,
+		        itemWidth:16,
+		        itemHeight:22,
+		        data:['Impression','Click','Conversion'],
+		        textStyle:{
+		            color:'#7984a3',
+		            fontFamily:'Arial',
+		            fontSize:16,
+		        }
+		    },
+		    grid: {
+		        show:false,
+		        top:60,
+		        left: 'auto',
+		        right: 10,
+		        bottom: 60,
+		        containLabel: true
+		    },
+		    xAxis: {
+		        type: 'category',
+		        boundaryGap: false,
+		        data: ['s1','s2','s3','z4','z5','z6','j7'],
+		        axisLine:{
+		            show:false
+		        },
+		        axisTick:{
+		            show:false
+		        },
+		        splitLine:{
+		            show:true,
+		            lineStyle:{
+		                color:['#dce9f6','#dce9f6']
+		            }
+		        },
+		        axisLabel:{
+		            show:true,
+		            textStyle:{
+		                color:'#7984a3',
+		                fontSize:12
+		            }
+		        }
+		    },
+		    yAxis: {
+		        type: 'value',
+		        axisLine:{
+		            show:false
+		        },
+		        axisTick:{
+		            show:false
+		        },
+		        splitLine:{
+		            show:true,
+		            lineStyle:{
+		                color:'#d0e3f6'
+		            }
+		        },
+		        axisLabel:{
+		            show:true,
+		            textStyle:{
+		                color:'#7984a3',
+		                fontSize:12
+		            }
+		        }
+		    },
+		    series: [
+		        {
+		            name:'Impression',
+		            type:'line',
+		            symbol:'circle',
+		            symbolSize:[7,7],
+		            data:[
+		                {value:220,symbol:'emptyCircle'},
+		                {value:182,symbol:'emptyCircle'},
+		                {value:191,symbol:'emptyCircle'},
+		                {value:200,symbol:'emptyCircle'},
+		                {value:290,symbol:'emptyCircle'},
+		                {value:330,symbol:'emptyCircle'},
+		                {value:310,symbol:'emptyCircle'}
+		            ],
+		            label:{
+		                normal:{
+		                    show:false,
+		                    formatter: '{a}: {b}: {c}'
+		                }
+		            },
+		            lineStyle:{
+		                normal:{
+		                    width:2
+		                }
+		                
+		            },
+		            smooth:false
+		        },{
+		            name:'Click',
+		            type:'line',
+		            symbol:'circle',
+		            symbolSize:[8,8],
+		            data:[
+		                {value:120,symbol:'emptyCircle'},
+		                {value:101,symbol:'emptyCircle'},
+		                {value:134,symbol:'emptyCircle'},
+		                {value:90,symbol:'emptyCircle'},
+		                {value:230,symbol:'emptyCircle'},
+		                {value:210,symbol:'emptyCircle'},
+		                {value:160,symbol:'emptyCircle'},
+		            ]
+		        },{
+		            name:'Conversion',
+		            type:'line',
+		            symbol:'circle',
+		            symbolSize:[7,7],
+		            data:[
+		                {value:15,symbol:'emptyCircle'},
+		                {value:23,symbol:'emptyCircle'},
+		                {value:20,symbol:'emptyCircle'},
+		                {value:18,symbol:'emptyCircle'},
+		                {value:10,symbol:'emptyCircle'},
+		                {value:30,symbol:'emptyCircle'},
+		                {value:40,symbol:'emptyCircle'}
+		            ]
+		        }
+		    ]
+        },
+        media: [
+        	{
+    			option: {
+	        		grid: {
+				        show:false,
+				        top:60,
+				        left: 'auto',
+				        right: 10,
+				        bottom: 60,
+				        containLabel: true
+				    },
+				    legend: {
+				        orient:'horizontal',
+				        bottom:'10px',
+				        right:'center',
+				        itemGap:20,
+				        itemWidth:16,
+				        itemHeight:22,
+				        data:['Impression','Click','Conversion'],
+				        textStyle:{
+				            color:'#7984a3',
+				            fontFamily:'Arial',
+				            fontSize:16,
+				        }
+				    }
+				}
+        	},
+            {
+                query: {
+                    maxWidth:600
+                },
+                option: {
+                	grid: {
+				        top:60,
+				        right: 140,
+				        bottom: 20
+				    },
+                    legend: {
+				        orient:'vertical',
+				        right:10,
+				        bottom:'center',
+				        itemGap:10
+                    }
+                }
+            }
+        ]
+	}
+	chart.setOption(option);
+	window.addEventListener('resize',function(){
+        chart.resize();    
+ 	}); 
+</script>

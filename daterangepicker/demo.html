@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>DateRangePicker</title>
+    <meta content="" name="keywords" />
+    <meta content="" name="description" />
+    <meta name="author" content="author,email address">
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="../../js/plugin/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../js/plugin/daterangepicker/daterangepicker.css" rel="stylesheet">
+    <style>
+		.demo{max-width:1200px;min-height:1000px;margin:0 auto;padding:50px;}
+		.ipt{width:200px;line-height:30px;height:30px;padding:5px 6px;}
+    </style>
+</head>
+<body>
+	<div class="demo">
+    	<input type="text" class="ipt" id="dateDemo" style="float:right;">
+    </div>
+</body>
+</html>
+<script src="../../js/plugin/jquery.min.js"></script>
+<script src="../../js/plugin/daterangepicker/moment.min.js"></script>
+<script src="../../js/plugin/daterangepicker/daterangepicker.js"></script>
+<script type="text/javascript">
+$(function(){
+	var start = moment().subtract(0, 'days');
+    var end = moment();
+    var opt = {
+        el: '#dateDemo',
+        autoApply: false, //自动生效
+        startDate: start,
+        endDate: end,
+        maxDate: end,
+        timePicker: true,
+        timePickerIncrement: 30,
+        opens: "left",
+        //语言
+        locale: {
+            applyLabel: "Apply",
+            cancelLabel: "Cancel",
+            fromLabel: "From",
+            toLabel: "To",
+            customRangeLabel: "Custom",
+            weekLabel: "W",
+            daysOfWeek: [
+                "Su",
+                "Mo",
+                "Tu",
+                "We",
+                "Th",
+                "Fr",
+                "Sa"
+            ],
+            monthNames: [
+                "January",
+                "February",
+                "March",
+                "April",
+                "May",
+                "June",
+                "July",
+                "August",
+                "September",
+                "October",
+                "November",
+                "December"
+            ],
+            firstDay: 1,
+            separator: " to ",
+            format: 'YYYY-MM-DD'
+        },
+        alwaysShowCalendars: true,
+        ranges: {
+            'Today': [moment(), moment()],
+            'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+            'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+            'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+            'This Month': [moment().startOf('month'), moment().endOf('month')],
+            'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+        },
+        callback: function(start, end, label) {
+            console.log("New date");
+            var startdate = moment(start).format('YYYY-MM-DD');
+            var enddate = moment(end).format('YYYY-MM-DD');
+            console.log(startdate,enddate)
+        }
+    }
+    if (!opt.el) {
+        return;
+    }
+    $(opt.el).daterangepicker(opt, opt.callback);
+})
+</script>

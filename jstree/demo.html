@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>DateRangePicker</title>
+    <meta content="" name="keywords" />
+    <meta content="" name="description" />
+    <meta name="author" content="author,email address">
+    <link href="../../js/plugin/jstree/jstree.min.css" rel="stylesheet">
+    <style>
+    .demo {max-width: 1200px;min-height: 1000px;margin: 0 auto;padding: 50px;}
+
+    .chk_cont{overflow:hidden;background: #fff;font-size: 0;width:480px;margin:10px 0;border:1px solid #c7dff7;font-family:arial;padding:10px 10px 10px 0;}
+    .chk_cont .chk_col_box {display:inline-block;width: 50%;vertical-align: top;background-color: #fff;font-size: 14px;box-sizing:border-box;padding: 0 0 0 10px;}
+    .chk_cont .scrollbar{max-height: 300px; overflow: hidden; overflow-y: auto;padding: 10px 0;}
+    .chk_cont .scrollbar::-webkit-scrollbar-track-piece{background-color: #cce6ff; }
+    .chk_cont .jstree-default .jstree-themeicon {width: 0 !important; overflow: hidden; }
+    .chk_cont .chked_col {padding: 10px 0;margin: 0;}
+    .chk_cont .chked_col li {padding:6px 5px;position: relative; cursor: pointer;margin:0 8px;;text-overflow: ellipsis; overflow: hidden;white-space: nowrap; }
+    .chk_cont .chked_col li:nth-child(even){background-color:#f6faff;}
+    .chk_cont .chked_col li:hover {background-color: #e7f4f9; }
+    .chk_cont .chked_col .col_icon {width: 13px; height: 13px; display: inline-block; vertical-align: 0px; margin-right: 3px; color: #ff504d; line-height: 15px; text-align: center; font-size: 12px; font-weight: 700;} 
+    .chk_cont .chk_tit{line-height: 20px; background: #e1f1ff; font-size: 16px; color: #7984a3;padding: 7px 0 5px 10px;font-weight: 700;}
+    </style>
+</head>
+
+<body>
+    <div class="demo">
+        <div class="chk_cont clearfix" id="GeoTree">
+            <div class="chk_col_box">
+                <div class="chk_tit">Geo List</div>
+                <div class="scrollbar chk_col"></div>
+            </div>
+            <div class="chk_col_box">
+                <div class="chk_tit">Selected</div>
+                <ul class="scrollbar chked_col"></ul>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+<script src="../../js/plugin/jquery.min.js"></script>
+<script src="../../js/plugin/jstree/jstree.min.js"></script>
+<script src="../../js/plugin/jstree/jstree.checkbox.js"></script>
+<script type="text/javascript">
+$(function() {
+    var bindJsTree = function(ele, option) {
+        var opt = {
+            cb: function(sData) {},
+            checkedData: []
+        }
+        var chkcol = $(ele).find('.chk_col')
+        var chkedCol = $(ele).find('.chked_col');
+        var dataArr = [];
+        $.extend(opt,option);
+        chkedCol.off('click.remove').on('click.remove', 'li', function(e) {
+            var vid = $(this).data('vid');
+            $(this).remove();
+            chkcol.jstree().deselect_node(vid);
+        })
+        var getData = function(data) {
+            var item, itemOriginal, htmlArr = [];
+            dataArr = [];
+            $.each(data.selected, function(e, ele) {
+                item = data.instance.get_node(ele);
+                itemOriginal = item.original;
+                if (!item.parent || !data.instance.get_node(item.parent).state.selected) {
+                    dataArr.push({
+                        id: itemOriginal.id,
+                        text: itemOriginal.text,
+                    });
+                    htmlArr.push('<li data-vid="' + itemOriginal.id + '" title="' + itemOriginal.text + '"><span class="col_icon">X</span>' + itemOriginal.text + '</li>')
+                }
+            })
+            chkedCol.html(htmlArr.join(''));
+            opt.cb(dataArr);
+        }
+        chkcol.on('changed.jstree', function(e, data) {
+            getData(data);
+        }).jstree({
+            plugins: ['checkbox'],
+            core: {
+                dblclick_toggle: true, //禁用双击
+                check_callback: true,
+                multiple: true,
+                data: {
+                    'url': function(node) {
+                        var basepath = '../../json/geo/';
+                        var url = 'country';
+                        var urlMap = {
+                            'cc': 'region/' + node.id,
+                            'r': 'city/' + node.id.replace('/', '-')
+                        }
+                        var item;
+                        if (node.original) {
+                            item = node.original;
+                            if (item.type) {
+                                url = urlMap[item.type] || url;
+                            }
+                        }
+                        return basepath + url + '.json';
+                    },
+                    data: function(node) {}
+                }
+            }
+        })
+        var defautlData = function(dData) {
+            var htmlArr = [];
+            $.each(dData, function(idx, iselect) {
+                htmlArr.push('<li data-vid="' + iselect.id + '" title="' + iselect.text + '"><span class="col_icon">X</span>' + iselect.text + '</li>')
+            })
+            chkedCol.html(htmlArr.join(''));
+        }
+        defautlData(opt.checkedData);
+    }
+    bindJsTree('#GeoTree',{
+        cb:function(data){
+            console.log(JSON.stringify(data))
+        }
+    });
+})
+</script>

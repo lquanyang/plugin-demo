@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="renderer" content="webkit">
+    <title>Echarts</title>
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0" name="viewport">
+    <style>
+    .demo {
+        margin: 0 auto;
+        padding: 50px;
+    }
+    .chart_box {
+    	height:300px;background-color:#fafafa;padding:10px 20px 10px 20px;
+    }
+    </style>
+</head>
+<body>
+    <div class="demo">
+        <div class="chart_box">
+        	<div id="charts01" style="height:100%;"></div>
+        </div>
+    </div>
+</body>
+</html>
+<script src="../../js/plugin/echarts/echarts.min.js"></script>
+<script type="text/javascript">
+	var chart = echarts.init(document.getElementById('charts01'),'macarons');
+	var option = {
+        baseOption:{
+		    title: {
+		        text: '7 Days of data',
+		        textStyle:{
+		            color:'#7984a3',
+		            fontSize:16
+		        },
+		        top:10,
+		        left:'auto'
+		    },
+		    tooltip: {
+		        //trigger: 'axis',
+		        axisPointer:{
+		            type:'line',
+		            lineStyle:{
+		                color:'rgba(0,208,190,0.9)',
+		                type:'dotted'
+		            }
+		        }
+		    },
+		    color:['#41affa', '#00d0be', '#f8564e'],
+		    xAxis: {
+		        type: 'category',
+		        boundaryGap: false,
+		        data: ['CTR'],
+		        axisLine:{
+		            show:false
+		        },
+		        axisTick:{
+		        	alignWithLabel: true,
+		            show:false
+		        },
+		        splitLine:{
+		            show:false,
+		            lineStyle:{
+		                color:['#dce9f6','#dce9f6']
+		            }
+		        },
+		        axisLabel:{
+		            show:false,
+		            textStyle:{
+		                color:'#7984a3',
+		                fontSize:12
+		            }
+		        }
+		    },
+		    yAxis: {
+		        type: 'value',
+		        axisLine:{
+		            show:false
+		        },
+		        axisTick:{
+		            show:false
+		        },
+		        splitLine:{
+		            show:false,
+		            lineStyle:{
+		                color:'#d0e3f6'
+		            }
+		        },
+		        axisLabel:{
+		            show:false,
+		            textStyle:{
+		                color:'#7984a3',
+		                fontSize:12
+		            }
+		        }
+		    },
+		    series: [
+		        {
+		            name:'Impression',
+		            type:'bar',
+		            barWidth: '15%',
+		            data:[20],
+		            label:{
+		            	normal:{
+		            		show:true,
+		            		position:'top',
+		            		formater:'{c}',
+		            		textStyle:{
+		            			fontSize:26
+		            		}
+		            	}
+		            },
+		            itemStyle:{
+		            	normal:{
+		            		color:'#00d0be'
+		            	}
+		            },
+		            barGap:'55%'
+		        },{
+		            name:'Click',
+		            type:'bar',
+		            barWidth: '15%',
+		            data:[52],
+		            label:{
+		            	normal:{
+		            		show:true,
+		            		position:'top',
+		            		formater:'{c}',
+		            		textStyle:{
+		            			fontSize:26
+		            		}
+		            	}
+		            },
+		            itemStyle:{
+		            	normal:{
+		            		color:'#41affa'
+		            	}
+		            },
+		            barGap:'55%'
+		        },{
+		            name:'Conversion',
+		            type:'bar',
+		            barWidth: '15%',
+		            data:[40],
+		            label:{
+		            	normal:{
+		            		show:true,
+		            		position:'top',
+		            		formater:'{c}',
+		            		textStyle:{
+		            			fontSize:26
+		            		}
+		            	}
+		            },
+		            itemStyle:{
+		            	normal:{
+		            		color:'#777ffb'
+		            	}
+		            },
+		            barGap:'55%'
+		        }
+		    ]
+        },
+        media: [
+        	{
+    			option: {
+	        		grid: {
+				        show:false,
+				        top:60,
+				        left: 'auto',
+				        right: 10,
+				        bottom: 70,
+				        containLabel: true
+				    },
+				    legend: {
+				        orient:'horizontal',
+				        bottom:'10px',
+				        right:'center',
+				        itemGap:10,
+				        itemWidth:16,
+				        itemHeight:16,
+				        data:['Impression','Click','Conversion'],
+				        textStyle:{
+				            color:'#7984a3',
+				            fontFamily:'Arial',
+				            fontSize:16,
+				        }
+				    }
+				}
+        	}
+        ]
+	}
+	chart.setOption(option);
+	window.addEventListener('resize',function(){
+        chart.resize();    
+ 	}); 
+</script>

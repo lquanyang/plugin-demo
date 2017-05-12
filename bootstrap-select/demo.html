@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>DateRangePicker</title>
+    <meta content="" name="keywords" />
+    <meta content="" name="description" />
+    <meta name="author" content="author,email address">
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="../../js/plugin/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../js/plugin/bootstrap-select/css/bootstrap-select.min.css" rel="stylesheet">
+    <style>
+		.demo{max-width:1200px;min-height:1000px;margin:0 auto;padding:50px;}
+		.ipt{width:100px;line-height:30px;height:30px;padding:5px 6px;}
+    </style>
+</head>
+<body>
+	<div class="demo">
+    	<select class="ipt_sel_date" multiple>
+          <optgroup label="Picnic" data-max-options="20">
+            <option data-tokens="ketchup mustard" title="Combo 1">Hot Dog, Fries and a Soda</option>
+            <option data-tokens="mustard" title="Combo 2">Burger, Shake and a Smile2</option>
+            <option data-tokens="mustard2" title="Combo 22">Burger, Shake and a Smile3</option>
+            <option data-tokens="frosting" title="Combo 3">Sugar, Spice and all things nice</option>
+            <option data-icon="glyphicon-heart">Ketchup</option>
+          </optgroup>
+          <optgroup label="Camping">
+            <option value="123">Tent</option>
+            <option data-subtext="Heinz">Flashlig22ht</option>
+            <option data-divider="true"></option>
+            <option disabled>Flashlight</option>
+            <option>Toilet Paper</option>
+          </optgroup>
+        </select>
+    </div>
+</body>
+</html>
+<script src="../../js/plugin/jquery.min.js"></script>
+<script src="../../js/plugin/bootstrap/js/bootstrap.min.js"></script>
+<script src="../../js/plugin/bootstrap-select/js/bootstrap-select.min.js"></script>
+<script type="text/javascript">
+$(function(){
+    // 绑定
+    // $('.ipt_sel_date').data();
+    $('.ipt_sel_date').selectpicker({
+        actionsBox:true ,// 全选和全不选按钮
+        container:false,//指定弹出内容目标
+        selectAllText:'SelectAll', //全选按钮文本
+        deselectAllText:'DeselectAll', //全不选按钮文本
+        selectedTextFormat:'count > 3', //选中显示类型
+        header:'Select a NImei', //下拉头部
+        hideDisabled:false,//是否隐藏禁用状态选项
+        liveSearch:true,//是否启用搜索
+        liveSearchPlaceholder:'Search...',//搜索默认提示文字
+        maxOptions:40,//[false] 最大选择数量
+        multipleSeparator:'+', //[,] 多选间隔符
+        showTick:true, //显示选中对勾
+        size:10,//['auto'] 超过数量开始滚动条
+        title:'Choose one of the following...', //默认select提示文本
+        width:'400px'//['auto','fit','100px'] 宽度
+    })
+    .on('rendered.bs.select',function(e){
+        //2次bug
+        // console.log('重绘和改变')
+    }).on('changed.bs.select',function(e){
+        console.log('改变')
+    }).on('loaded.bs.select',function(e){
+        console.log('绑定完成')
+    });
+    //赋值
+    // $('.ipt_sel_date').selectpicker('val', ['ccc']);
+    //赋值重绘
+	// $('.ipt_sel_date').val('abc');
+    // $('.ipt_sel_date').selectpicker('render');
+
+    //多选时全选
+    // $('.ipt_sel_date').selectpicker('selectAll');
+    //全不选
+    // $('.ipt_sel_date').selectpicker('deselectAll');
+    //刷新
+    // $('.ipt_sel_date').selectpicker('refresh');
+    //隐藏
+    // $('.ipt_sel_date').selectpicker('hide');
+    //显示
+    // $('.ipt_sel_date').selectpicker('show');
+    //注销
+    // $('.ipt_sel_date').selectpicker('destroy');
+    //取值
+    //$('.ipt_sel_date').selectpicker('val')
+
+})
+</script>
